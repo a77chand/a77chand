@@ -220,7 +220,7 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
     doll_css = SP.palette_css(SP.palette(skin, hair, outfit))
 
     static_line = f'<text class="static" x="{X0}" y="{BASE}" style="display:none">{esc(lines[0])}</text>'
-    return W, H, f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="hi, i'm anusha. cs student at uwaterloo. i make ml models show their work.">
+    return W, H, f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="hi, i'm anusha :)">
 <style>
 {css}
 text{{{FAM}}}
@@ -514,8 +514,8 @@ for st in ("long", "shoulder"):
     if st == "long":
         sizes["header.svg"] = write("header.svg", svg)
 sizes["footer.svg"] = write("footer.svg", footer())
-for name, color in [("portfolio", CORAL), ("linkedin", PINK), ("email", PURPLE)]:
-    sizes[f"badge-{name}.svg"] = write(f"badge-{name}.svg", badge(name, color, ICONS[name]))
+for name, label, color in [("portfolio", "my corner of the internet", CORAL), ("linkedin", "linkedin", PINK), ("email", "email", PURPLE)]:
+    sizes[f"badge-{name}.svg"] = write(f"badge-{name}.svg", badge(label, color, ICONS[name]))
 for th in THEME:
     a, c = art_face(th)
     sizes[f"card-ethicura-{th}.svg"] = write(f"card-ethicura-{th}.svg", card(th, "ethicura-ai", ["spots deepfakes, then shows", "you where it looked"], ["python", "tensorflow", "webgpu"], a, c, "fake 57.5%"))

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/header.svg" alt="hi, i'm anusha :) a pixel-art me in glasses, holding a laptop covered in stickers" width="100%">
+  <img src="assets/header.svg" alt="hi, i'm anusha :)" width="100%">
 </p>
 
 <p align="center">
-  <a href="https://portfolio-anusha23.vercel.app"><img src="assets/badge-portfolio.svg" alt="portfolio" height="30"></a>
+  <a href="https://portfolio-anusha23.vercel.app"><img src="assets/badge-portfolio.svg" alt="my corner of the internet" height="30"></a>
   <a href="https://www.linkedin.com/in/anushachandra"><img src="assets/badge-linkedin.svg" alt="linkedin" height="30"></a>
   <a href="mailto:a77chand@uwaterloo.ca"><img src="assets/badge-email.svg" alt="email" height="30"></a>
 </p>
@@ -40,7 +40,7 @@ lately i've been getting models to run right in the browser: no server, no uploa
 
 if you're building something with ml, maps or games, or you just want to swap hackathon stories, i'd love to hear from you :)
 
-[portfolio](https://portfolio-anusha23.vercel.app) · [linkedin](https://www.linkedin.com/in/anushachandra) · [a77chand@uwaterloo.ca](mailto:a77chand@uwaterloo.ca)
+[my corner of the internet](https://portfolio-anusha23.vercel.app) · [linkedin](https://www.linkedin.com/in/anushachandra) · [a77chand@uwaterloo.ca](mailto:a77chand@uwaterloo.ca)
 
 <p align="center">
   <img src="assets/btn-pacman.svg" alt="pac-man approved">
