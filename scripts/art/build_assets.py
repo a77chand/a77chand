@@ -155,8 +155,8 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
     fr, fi = Face(400, t_roman, SERIF), Face(400, t_ital, SERIF_IT, "italic")
     f5 = Face(500, "".join(lines), MONO)
     css = fr.css("Instrument Serif") + fi.css("Instrument Serif") + f5.css("Geist Mono")
-    X0, BASE, SIZE, R = 26, 156, 20, 9
-    TS = 60
+    X0, BASE, SIZE, R = 26, 144, 18, 8
+    TS = 50
     title_w = fr.width("hi, i'm ", TS) + fi.width("anusha", TS) + fr.width(" :)", TS)
     PY = BASE - SIZE * 0.34
     TYPE, HOLD, SPEED = 0.065, 1.7, 420
@@ -221,8 +221,27 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
     # the pixel doll, standing on the right with her laptop
     SC, SX, SY = 2.5, 812, 8
     rows = SP.build(style)
-    doll = (f'<g class="hop">{SP.svg_rects(rows, None, SX, SY, SC)}'
-            f'<g class="blk">{SP.eye_rects(SP.blink(rows), None, SX, SY, SC)}</g></g>')
+    # a 10 s loop: stand, wave hello with a "hi!" bubble, stand, hop with sparkles, stand
+    frames = "".join(f'<g class="{cls}">{SP.svg_rects(SP.build(style, pose), None, SX, SY, SC)}</g>'
+                     for cls, pose in (("fi", "idle"), ("fw1", "wave1"), ("fw2", "wave2")))
+    doll = (f'<g class="jump"><g class="hop">{frames}'
+            f'<g class="blk">{SP.eye_rects(SP.blink(rows), None, SX, SY, SC)}</g></g></g>')
+    hi = ["#...#.#", "#.....#", "###.#.#", "#.#.#..", "#.#.#.#"]
+    bubble_rows = ([".###########.", "#WWWWWWWWWWW#"]
+                   + ["#WW" + r.replace("#", "T").replace(".", "W") + "WW#" for r in hi]
+                   + ["#WWWWWWWWWWW#", ".#######WW##.", "........#WW#.", ".........###."])
+    bub_col = {"#": "#25162e", "W": "#ffffff", "T": ROSE}
+    BX, BY = 790, 16
+    bubble = "".join(f'<rect x="{BX + i * SC:.1f}" y="{BY + j * SC:.1f}" width="{SC + 0.1}" height="{SC + 0.1}" fill="{bub_col[ch]}"/>'
+                     for j, r in enumerate(bubble_rows) for i, ch in enumerate(r) if ch in bub_col)
+    def sparkle(x, y, big, color):
+        arm = 2 if big else 1
+        cells = [(0, 0)] + [(d * k, 0) for k in range(1, arm + 1) for d in (-1, 1)] + [(0, d * k) for k in range(1, arm + 1) for d in (-1, 1)]
+        return "".join(f'<rect x="{x + cx * SC:.1f}" y="{y + cy * SC:.1f}" width="{SC + 0.1}" height="{SC + 0.1}" fill="{"#ffffff" if (cx, cy) == (0, 0) and big else color}"/>' for cx, cy in cells)
+    spots = [(792, 92, "#f5b700"), (934, 104, VIOLET), (800, 176, ROSE), (938, 186, TEAL)]
+    spark_a = "".join(sparkle(x, y, i % 2 == 0, c) for i, (x, y, c) in enumerate(spots))
+    spark_b = "".join(sparkle(x, y, i % 2 == 1, c) for i, (x, y, c) in enumerate(spots))
+    doll += f'<g class="bub">{bubble}</g><g class="spa">{spark_a}</g><g class="spb">{spark_b}</g>'
     doll_css = SP.palette_css(SP.palette(skin, hair, outfit))
 
     static_line = f'<text class="static" x="{X0}" y="{BASE}" style="display:none">{esc(lines[0])}</text>'
@@ -237,13 +256,22 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
 .b1{{animation-delay:-.6s}}.b2{{animation-delay:-1.2s}}
 .pp{{animation:look 6s ease-in-out infinite}}@keyframes look{{0%,40%{{transform:translateX(0)}}50%,90%{{transform:translateX(3px)}}100%{{transform:translateX(0)}}}}
 .hop{{animation:hop 2s steps(1) infinite}}@keyframes hop{{50%{{transform:translateY(-2.5px)}}}}
-.blk{{opacity:0;animation:blk 4.6s linear infinite}}@keyframes blk{{0%,92.9%{{opacity:0}}93%,96.9%{{opacity:1}}97%,100%{{opacity:0}}}}
+.fw1,.fw2,.bub,.spa,.spb,.blk{{opacity:0}}
+.fi,.fw1,.fw2,.bub,.spa,.spb,.blk{{animation-duration:10s;animation-timing-function:steps(1,end);animation-iteration-count:infinite}}
+.fi{{animation-name:fi}}@keyframes fi{{0%{{opacity:1}}20%{{opacity:0}}44%,100%{{opacity:1}}}}
+.fw1{{animation-name:w1}}@keyframes w1{{0%{{opacity:0}}20%{{opacity:1}}23%{{opacity:0}}26%{{opacity:1}}29%{{opacity:0}}32%{{opacity:1}}35%{{opacity:0}}38%{{opacity:1}}41%,100%{{opacity:0}}}}
+.fw2{{animation-name:w2}}@keyframes w2{{0%{{opacity:0}}23%{{opacity:1}}26%{{opacity:0}}29%{{opacity:1}}32%{{opacity:0}}35%{{opacity:1}}38%{{opacity:0}}41%{{opacity:1}}44%,100%{{opacity:0}}}}
+.bub{{animation-name:bb}}@keyframes bb{{0%{{opacity:0}}21%{{opacity:1}}46%,100%{{opacity:0}}}}
+.blk{{animation-name:bk}}@keyframes bk{{0%{{opacity:0}}12%{{opacity:1}}13.5%{{opacity:0}}52%{{opacity:1}}53.5%{{opacity:0}}84%{{opacity:1}}85.5%,100%{{opacity:0}}}}
+.spa{{animation-name:sa}}@keyframes sa{{0%{{opacity:0}}63%{{opacity:1}}66%{{opacity:0}}69%{{opacity:1}}72%,100%{{opacity:0}}}}
+.spb{{animation-name:sb}}@keyframes sb{{0%{{opacity:0}}66%{{opacity:1}}69%{{opacity:0}}72%{{opacity:1}}75%,100%{{opacity:0}}}}
+.jump{{animation:jp 10s infinite}}@keyframes jp{{0%,60%{{transform:translateY(0);animation-timing-function:ease-in}}61.5%{{transform:translateY(2px);animation-timing-function:ease-out}}64.5%{{transform:translateY(-10px);animation-timing-function:ease-in}}67.5%{{transform:translateY(0)}}68.5%{{transform:translateY(1.5px)}}70%,100%{{transform:translateY(0)}}}}
 /*doll*/{doll_css}/*/doll*/
-@media (prefers-reduced-motion:reduce){{.typing{{display:none}}.static{{display:inline!important}}.bob,.pp,.hop,.blink,.blk{{animation:none}}}}
+@media (prefers-reduced-motion:reduce){{.typing{{display:none}}.static{{display:inline!important}}.bob,.pp,.hop,.blink,.blk,.jump,.fi,.fw1,.fw2,.bub,.spa,.spb{{animation:none}}}}
 </style>
 <defs><linearGradient id="tg" gradientUnits="userSpaceOnUse" x1="{X0}" y1="0" x2="{X0 + title_w:.0f}" y2="0">{stops}</linearGradient></defs>
 {doll}
-<text class="t" x="{X0 - 1}" y="112" font-size="{TS}" fill="url(#tg)">hi, i'm <tspan font-style="italic">anusha</tspan> :)</text>
+<text class="t" x="{X0 - 1}" y="106" font-size="{TS}" fill="url(#tg)">hi, i'm <tspan font-style="italic">anusha</tspan> :)</text>
 <g class="typing m" font-size="{SIZE}" font-weight="500" fill="{INK}">{"".join(chars)}{cursor}{pac}</g>
 <g class="m" font-size="{SIZE}" font-weight="500" fill="{INK}">{static_line}</g>
 {gang}

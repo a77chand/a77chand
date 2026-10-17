@@ -40,6 +40,14 @@ class Canvas:
             return c
         self.fill(inside, k, only)
 
+    def capsule(self, x0, y0, x1, y1, r, k):
+        """A thick line with round ends, for limbs."""
+        def near(px, py):
+            dx, dy = x1 - x0, y1 - y0
+            t = max(0.0, min(1.0, ((px - x0) * dx + (py - y0) * dy) / (dx * dx + dy * dy)))
+            return (px - x0 - t * dx) ** 2 + (py - y0 - t * dy) ** 2 <= r * r
+        self.fill(near, k)
+
     def pix(self, rows, x0, y0, legend):
         for j, row in enumerate(rows):
             for i, ch in enumerate(row):
@@ -47,8 +55,14 @@ class Canvas:
                     self.put(x0 + i, y0 + j, legend[ch])
 
 
-def build(style="long"):
-    """style: long | shoulder"""
+# raised right arm for the wave: (elbow, wrist, hand centre)
+WAVE = {"wave1": ((37, 31), (37.6, 23), (37.8, 19.6)),
+        "wave2": ((37, 31), (40.2, 24), (40.9, 20.8))}
+
+
+def build(style="long", pose="idle"):
+    """style: long | shoulder.  pose: idle | wave1 | wave2 (laptop in one hand, waving with the other)"""
+    holding = pose == "idle"
     c = Canvas()
     # ---- back hair
     if style == "long":
@@ -86,12 +100,15 @@ def build(style="long"):
     c.pix(["cccc..cccc", ".cccccccc.", "..cC..Cc.."], 18, 30, {"c": "c", "C": "C"})
     # sleeves hanging down the sides, bending in to hold the laptop
     c.poly([(13, 32), (16, 32), (16, 46), (17, 48), (12, 48), (11, 44), (11.5, 36)], "T")
-    c.poly([(30, 32), (33, 32), (34.5, 36), (35, 44), (34, 48), (29, 48), (30, 46)], "T")
+    if holding:
+        c.poly([(30, 32), (33, 32), (34.5, 36), (35, 44), (34, 48), (29, 48), (30, 46)], "T")
     for y in range(36, 46):
         c.put(12, y, "t")
-        c.put(33, y, "t")
+        if holding:
+            c.put(33, y, "t")
     c.rect(12, 46, 16, 47, "t")   # cuffs
-    c.rect(30, 46, 34, 47, "t")
+    if holding:
+        c.rect(30, 46, 34, 47, "t")
     # ---- laptop lid, stickers facing out
     c.poly([(14, 37), (32, 37), (32.5, 49), (13.5, 49)], "L")
     c.rect(14, 48, 32, 48, "m")
@@ -102,7 +119,8 @@ def build(style="long"):
     c.pix(["m.m", ".m.", "m.m"], 28, 44, {"m": "m"})   # tiny </> -ish sticker
     # hands gripping the sides of the lid
     c.pix(["SSS", "sSS", "sSs"], 13, 46, {"S": "S", "s": "s"})
-    c.pix(["SSS", "SSs", "sSs"], 30, 46, {"S": "S", "s": "s"})
+    if holding:
+        c.pix(["SSS", "SSs", "sSs"], 30, 46, {"S": "S", "s": "s"})
     # ---- face
     def face(x, y):
         dx, dy = (x - 23) / 8.6, (y - 17.2) / 9.6
@@ -148,7 +166,18 @@ def build(style="long"):
     c.put(17, 16, "g"); c.put(27, 16, "g")   # lens glints
     c.put(16, 23, "r"); c.put(17, 23, "r"); c.put(29, 23, "r"); c.put(30, 23, "r")
     c.put(23, 22, "s")
-    c.pix(["M.M", ".M."], 22, 24, {"M": "M"})
+    if holding:
+        c.pix(["M.M", ".M."], 22, 24, {"M": "M"})
+    else:
+        c.pix(["MMM", ".M."], 22, 24, {"M": "M"})       # open, happy mouth while waving
+        (ex, ey), (wx, wy), (hx, hy) = WAVE[pose]
+        c.capsule(31.5, 33, ex, ey, 2.4, "T")             # upper arm, in front of her hair
+        c.capsule(ex, ey, wx, wy, 2.1, "T")
+        c.capsule(ex + 0.6, ey - 1, wx + 0.6, wy + 1, 0.6, "t")
+        c.capsule(wx, wy + 0.6, wx + (hx - wx) * 0.3, wy, 2.2, "t")   # cuff
+        c.fill(lambda x, y: ((x - hx) / 1.8) ** 2 + ((y - hy) / 2.2) ** 2 <= 1, "S")
+        c.put(round(hx - 2), round(hy + 0.5), "S")        # thumb
+        c.put(round(hx + 1), round(hy + 1), "s")
     # ---- outline: one dark pixel ring around the whole silhouette
     filled = [[c.g[y][x] is not None for x in range(W)] for y in range(H)]
     for y in range(H):
