@@ -128,8 +128,11 @@ def pacman(r, color=PAC):
 
 
 # ---------------------------------------------------------------- header
-def header(style="long", skin="medium", hair="black", outfit="sage"):
-    W, H = 960, 290
+def header(theme="dark", style="long", skin="medium", hair="black", outfit="sage"):
+    """Transparent banner: title, typing line pac-man eats, ghosts, and the pixel doll."""
+    W, H = 960, 250
+    ink = CREAM if theme == "dark" else "#2b1d38"
+    grad = [AMBER, CORAL, PINK, LILAC] if theme == "dark" else ["#f08a00", CORAL, PINK, PURPLE]
     title = "hi, i'm anusha :)"
     lines = ["cs student @ uwaterloo",
              "i make ml models show their work",
@@ -137,7 +140,7 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
              "and pac-man, but for trick-or-treating"]
     css, faces = fonts_css({600: title, 500: "".join(lines)})
     f5 = faces[500]
-    X0, BASE, SIZE, R = 60, 202, 30, 14
+    X0, BASE, SIZE, R = 24, 172, 30, 14
     PY = BASE - SIZE * 0.34
     TYPE, HOLD, SPEED = 0.065, 1.7, 420
 
@@ -192,73 +195,46 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
         tk += [kt(p["hold_end"]), kt(p["p_end"])]
         ov += ["1", "0"]; ok += [kt(p["hold_end"]), kt(p["p_end"])]
     tv.append(f"{plan[0]['p0']:.1f},{PY:.1f}"); tk.append("1")
-    pac = (f'<g opacity="0"><g>{pacman(R)}</g>'
+    pac = (f'<g opacity="0"><g>{pacman(R, PAC if theme == "dark" else "#f2b705")}</g>'
            f'<animateTransform attributeName="transform" type="translate" values="{";".join(tv)}" keyTimes="{";".join(tk)}" dur="{T}s" repeatCount="indefinite"/>'
            f'<animate attributeName="opacity" values="{";".join(ov)}" keyTimes="{";".join(ok)}" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/></g>')
 
-    rnd = random.Random(11)
-    spots = []
-    while len(spots) < 38:
-        sx, sy = rnd.uniform(20, W - 20), rnd.uniform(16, H - 16)
-        if 36 < sx < 700 and 58 < sy < 222:      # keep the text clear
-            continue
-        if 680 < sx < 950 and 20 < sy < 290:     # and her corner
-            continue
-        spots.append((sx, sy))
-    stars = "".join(
-        f'<circle class="tw" cx="{sx:.0f}" cy="{sy:.0f}" r="{rnd.choice([0.8, 1, 1.2, 1.6])}" fill="{CREAM}" '
-        f'style="animation-delay:{rnd.uniform(0, 4):.2f}s;animation-duration:{rnd.uniform(2.5, 5):.2f}s"/>'
-        for sx, sy in spots)
-    gang = (ghost(708, 104, 17, BLUSH, cls="bob b0") + ghost(748, 214, 14, TEAL, cls="bob b2")
-            + ghost(934, 50, 11, CORAL, cls="bob b1"))
-    # the pixel doll, standing in the corner with her laptop
-    SC, SX, SY = 2.7, 800, 20
+    gang = (ghost(690, 82, 17, BLUSH, cls="bob b0") + ghost(736, 176, 14, TEAL, cls="bob b2")
+            + ghost(942, 34, 11, CORAL, cls="bob b1"))
+    # the pixel doll, standing on the right with her laptop
+    SC, SX, SY = 2.5, 812, 8
     rows = SP.build(style)
-    doll = (f'<ellipse cx="{SX + 23 * SC:.0f}" cy="{SY + 92.5 * SC:.0f}" rx="46" ry="6" fill="#000" opacity=".35"/>'
-            f'<g class="hop">{SP.svg_rects(rows, None, SX, SY, SC)}'
+    doll = (f'<g class="hop">{SP.svg_rects(rows, None, SX, SY, SC)}'
             f'<g class="blk">{SP.eye_rects(SP.blink(rows), None, SX, SY, SC)}</g></g>')
     doll_css = SP.palette_css(SP.palette(skin, hair, outfit))
 
     static_line = f'<text class="static" x="{X0}" y="{BASE}" style="display:none">{esc(lines[0])}</text>'
+    stops = "".join(f'<stop offset="{o}" stop-color="{c}"/>' for o, c in zip(("0", ".35", ".65", "1"), grad))
     return W, H, f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="hi, i'm anusha :)">
 <style>
 {css}
 text{{{FAM}}}
-.tw{{animation:tw 4s ease-in-out infinite}}@keyframes tw{{0%,100%{{opacity:.15}}50%{{opacity:.8}}}}
 .blink{{animation:bl 1s steps(1) infinite}}@keyframes bl{{50%{{opacity:0}}}}
 .bob{{animation:bob 2.4s ease-in-out infinite}}@keyframes bob{{0%,100%{{transform:translateY(0)}}50%{{transform:translateY(-7px)}}}}
-.b1{{animation-delay:-.6s}}.b2{{animation-delay:-1.2s}}.b3{{animation-delay:-1.8s}}
+.b1{{animation-delay:-.6s}}.b2{{animation-delay:-1.2s}}
 .pp{{animation:look 6s ease-in-out infinite}}@keyframes look{{0%,40%{{transform:translateX(0)}}50%,90%{{transform:translateX(3px)}}100%{{transform:translateX(0)}}}}
-.hop{{animation:hop 2s steps(1) infinite}}@keyframes hop{{50%{{transform:translateY(-2.7px)}}}}
+.hop{{animation:hop 2s steps(1) infinite}}@keyframes hop{{50%{{transform:translateY(-2.5px)}}}}
 .blk{{opacity:0;animation:blk 4.6s linear infinite}}@keyframes blk{{0%,92.9%{{opacity:0}}93%,96.9%{{opacity:1}}97%,100%{{opacity:0}}}}
 /*doll*/{doll_css}/*/doll*/
-@media (prefers-reduced-motion:reduce){{.typing{{display:none}}.static{{display:inline!important}}.tw,.bob,.pp,.hop,.blink,.blk{{animation:none}}}}
+@media (prefers-reduced-motion:reduce){{.typing{{display:none}}.static{{display:inline!important}}.bob,.pp,.hop,.blink,.blk{{animation:none}}}}
 </style>
-<defs>
-<linearGradient id="tg" x1="0" x2="1"><stop offset="0" stop-color="{AMBER}"/><stop offset=".35" stop-color="{CORAL}"/><stop offset=".65" stop-color="{PINK}"/><stop offset="1" stop-color="{LILAC}"/></linearGradient>
-<radialGradient id="g1" cx=".08" cy="1" r=".7"><stop offset="0" stop-color="{CORAL}" stop-opacity=".28"/><stop offset="1" stop-color="{CORAL}" stop-opacity="0"/></radialGradient>
-<radialGradient id="g3" cx="{SX + 23 * SC:.0f}" cy="150" r="150" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="{LILAC}" stop-opacity=".28"/><stop offset="1" stop-color="{LILAC}" stop-opacity="0"/></radialGradient>
-<radialGradient id="g2" cx=".95" cy="0" r=".6"><stop offset="0" stop-color="{PURPLE}" stop-opacity=".35"/><stop offset="1" stop-color="{PURPLE}" stop-opacity="0"/></radialGradient>
-<clipPath id="card"><rect width="{W}" height="{H}" rx="22"/></clipPath>
-</defs>
-<g clip-path="url(#card)">
-<rect width="{W}" height="{H}" fill="{NIGHT}"/>
-<rect width="{W}" height="{H}" fill="url(#g1)"/>
-<rect width="{W}" height="{H}" fill="url(#g2)"/>
-<rect width="{W}" height="{H}" fill="url(#g3)"/>
-{stars}
+<defs><linearGradient id="tg" x1="0" x2="1">{stops}</linearGradient></defs>
 {doll}
-</g>
-<text x="{X0 - 3}" y="128" font-size="66" font-weight="600" fill="url(#tg)">{esc(title)}</text>
-<g class="typing" font-size="{SIZE}" font-weight="500" fill="{CREAM}">{"".join(chars)}{cursor}{pac}</g>
-<g font-size="{SIZE}" font-weight="500" fill="{CREAM}">{static_line}</g>
+<text x="{X0 - 3}" y="104" font-size="66" font-weight="600" fill="url(#tg)">{esc(title)}</text>
+<g class="typing" font-size="{SIZE}" font-weight="500" fill="{ink}">{"".join(chars)}{cursor}{pac}</g>
+<g font-size="{SIZE}" font-weight="500" fill="{ink}">{static_line}</g>
 {gang}
 </svg>'''
 
 
 # ---------------------------------------------------------------- project cards
-CW, CH = 300, 372
-PX, PY_, PW, PH = 14, 14, 272, 200
+CW, CH = 300, 232
+PX, PY_, PW, PH = 14, 14, 272, 150
 
 
 def card(theme, name, desc, chips, art, art_css="", label=""):
@@ -271,7 +247,7 @@ def card(theme, name, desc, chips, art, art_css="", label=""):
         chip_svg.append(f'<rect x="{x:.1f}" y="330" width="{w:.1f}" height="24" rx="12" fill="{t["chips"][i % 3]}"/>'
                         f'<text x="{x + w / 2:.1f}" y="346.5" font-size="12.5" font-weight="500" text-anchor="middle" fill="{t["chip_fg"]}">{esc(c)}</text>')
         x += w + 7
-    desc_svg = "".join(f'<text x="20" y="{280 + i * 21}" font-size="15.5" fill="{t["muted"]}">{esc(d)}</text>' for i, d in enumerate(desc))
+    desc_svg = "".join(f'<text x="20" y="{PY_ + PH + 54 + i * 18}" font-size="13.5" fill="{t["muted"]}">{esc(d)}</text>' for i, d in enumerate(desc))
     return f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {CW} {CH}" width="{CW}" height="{CH}" role="img" aria-label="{esc(name)}: {esc(" ".join(desc))}">
 <style>
 {css}
@@ -282,7 +258,7 @@ text{{{FAM}}}
 <rect x="{PX}" y="{PY_}" width="{PW}" height="{PH}" rx="15" fill="{t["panel"]}"/>
 <clipPath id="pc"><rect x="{PX}" y="{PY_}" width="{PW}" height="{PH}" rx="15"/></clipPath>
 <g clip-path="url(#pc)">{art}</g>
-<text x="20" y="250" font-size="23" font-weight="600" fill="{t["fg"]}">{esc(name)}</text>
+<text x="20" y="{PY_ + PH + 32}" font-size="20" font-weight="600" fill="{t["fg"]}">{esc(name)}</text>
 {desc_svg}
 {"".join(chip_svg)}
 </svg>'''
@@ -290,7 +266,7 @@ text{{{FAM}}}
 
 def art_face(theme):
     t = THEME[theme]
-    P, cx, cy = 5.6, 150, 122
+    P, cx, cy = 4.1, 150, 91
     rx, ry = 9.6, 12.4
     spots = [(-3.6, -2.2, 2.4, 1.0), (3.0, 5.6, 2.2, 0.75), (1.0, -8.5, 2.6, 0.35)]
     base, hot = [], []
@@ -306,11 +282,11 @@ def art_face(theme):
                 continue
             x, y = cx + i * P, cy + j * P
             h = min(1.0, sum(a * math.exp(-((i - hx) ** 2 + (j - hy) ** 2) / (2 * s * s)) for hx, hy, s, a in spots))
-            base.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="1.9" fill="{t["dot"]}"/>')
+            base.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="1.45" fill="{t["dot"]}"/>')
             if h > 0.12:
                 col = inferno(0.4 + 0.6 * h) if theme == "dark" else inferno(0.3 + 0.58 * h)
-                hot.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.9 + 0.4 * h:.2f}" fill="{col}" fill-opacity="{min(1, 0.25 + h):.2f}"/>')
-    bx0, by0, bx1, by1, L = cx - 66, cy - 84, cx + 66, cy + 80, 12
+                hot.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{1.45 + 0.35 * h:.2f}" fill="{col}" fill-opacity="{min(1, 0.25 + h):.2f}"/>')
+    bx0, by0, bx1, by1, L = cx - 52, cy - 64, cx + 52, cy + 62, 10
     br = (f'M{bx0},{by0 + L}V{by0}H{bx0 + L} M{bx1 - L},{by0}H{bx1}V{by0 + L} '
           f'M{bx1},{by1 - L}V{by1}H{bx1 - L} M{bx0 + L},{by1}H{bx0}V{by1 - L}')
     art = (f'<g>{"".join(base)}</g><g class="hot">{"".join(hot)}</g>'
@@ -327,7 +303,7 @@ def art_face(theme):
 def art_bc(theme):
     t = THEME[theme]
     cells = json.load(open(BC_JSON))
-    px, py = 4.4, 7.4
+    px, py = 3.4, 5.7
     rows = max(c[0] for c in cells)
     ox, oy = PX + (PW - 49 * px) / 2 - px, PY_ + (PH - 24 * py) / 2
     pmax = max(c[2] for c in cells)
@@ -380,7 +356,7 @@ def art_pac(theme):
     path_d = "M" + " L".join(f"{x},{y}" for x, y in route)
     pac_col = PAC if theme == "dark" else "#f2b705"
     gh = ghost(0, 0, 8, CORAL)
-    art = (f'<g transform="translate(9.6,-28.6) scale(.92)">{st}{ring}{houses}<g>{"".join(pellets)}</g>'
+    art = (f'<g transform="translate(46,-17) scale(.68)">{st}{ring}{houses}<g>{"".join(pellets)}</g>'
            f'<g>{pacman(9.5, pac_col)}<animateMotion path="{path_d}" dur="{T}s" repeatCount="indefinite" rotate="auto"/></g>'
            f'<g>{gh}<animateMotion path="{path_d}" dur="{T}s" begin="{-(T - 1.1):.2f}s" repeatCount="indefinite"/></g></g>')
     return art, ""
@@ -508,21 +484,19 @@ ICONS = {
 }
 
 sizes = {}
-for st in ("long", "shoulder"):
-    W, H, svg = header(st)
-    sizes[f"header-{st}.svg"] = write(f"header-{st}.svg", svg)
-    if st == "long":
-        sizes["header.svg"] = write("header.svg", svg)
+for th in ("light", "dark"):
+    W, H, svg = header(th)
+    sizes[f"header-{th}.svg"] = write(f"header-{th}.svg", svg)
 sizes["footer.svg"] = write("footer.svg", footer())
 for name, label, color in [("portfolio", "my corner of the internet", CORAL), ("linkedin", "linkedin", PINK), ("email", "email", PURPLE)]:
     sizes[f"badge-{name}.svg"] = write(f"badge-{name}.svg", badge(label, color, ICONS[name]))
 for th in THEME:
     a, c = art_face(th)
-    sizes[f"card-ethicura-{th}.svg"] = write(f"card-ethicura-{th}.svg", card(th, "ethicura-ai", ["spots deepfakes, then shows", "you where it looked"], ["python", "tensorflow", "webgpu"], a, c, "fake 57.5%"))
+    sizes[f"card-ethicura-{th}.svg"] = write(f"card-ethicura-{th}.svg", card(th, "ethicura-ai", ["spots deepfakes, shows why"], [], a, c, "fake 57.5%"))
     a, c = art_bc(th)
-    sizes[f"card-wildfire-{th}.svg"] = write(f"card-wildfire-{th}.svg", card(th, "wildfire-risk", ["weekly fire risk for every", "corner of british columbia"], ["python", "scikit-learn", "shap"], a, c))
+    sizes[f"card-wildfire-{th}.svg"] = write(f"card-wildfire-{th}.svg", card(th, "wildfire-risk", ["weekly fire risk across b.c."], [], a, c))
     a, c = art_pac(th)
-    sizes[f"card-packween-{th}.svg"] = write(f"card-packween-{th}.svg", card(th, "pack_ween", ["pac-man, but you're out", "trick-or-treating"], ["react", "node", "ellehacks"], a, c, "25 m"))
+    sizes[f"card-packween-{th}.svg"] = write(f"card-packween-{th}.svg", card(th, "pack_ween", ["pac-man for trick-or-treating"], [], a, c, "25 m"))
     sizes[f"pacman-contrib-{th}.svg"] = write(f"pacman-contrib-{th}.svg", contrib(th))
 for k, v in sizes.items():
     print(f"{k:28s} {v / 1024:6.1f} KB")

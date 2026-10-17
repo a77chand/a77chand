@@ -1,6 +1,7 @@
-<p align="center">
-  <img src="assets/header.svg" alt="hi, i'm anusha :)" width="100%">
-</p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg">
+  <img src="assets/header-light.svg" alt="hi, i'm anusha :)" width="100%">
+</picture>
 
 <p align="center">
   <a href="https://portfolio-anusha23.vercel.app"><img src="assets/badge-portfolio.svg" alt="my corner of the internet" height="30"></a>
@@ -23,9 +24,9 @@ lately i've been getting models to run right in the browser: no server, no uploa
 
 ### 🛠️ things i've made
 
-<a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, then shows you where it looked" src="assets/card-ethicura-light.svg" width="32%"></picture></a>
-<a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk for every corner of british columbia" src="assets/card-wildfire-light.svg" width="32%"></picture></a>
-<a href="https://github.com/a77chand/Pack_Ween1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-packween-dark.svg"><img alt="pack_ween: pac-man, but you're out trick-or-treating" src="assets/card-packween-light.svg" width="32%"></picture></a>
+<a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="32%"></picture></a>
+<a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk across b.c." src="assets/card-wildfire-light.svg" width="32%"></picture></a>
+<a href="https://github.com/a77chand/Pack_Ween1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-packween-dark.svg"><img alt="pack_ween: pac-man for trick-or-treating" src="assets/card-packween-light.svg" width="32%"></picture></a>
 
 <p align="center"><sub>try them out: <a href="https://ethicura-frontend.vercel.app">deepfake demo</a> · <a href="https://pack-ween.onrender.com">play pack_ween</a></sub></p>
 
