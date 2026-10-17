@@ -1,0 +1,29 @@
+name: pac-man graph
+
+on:
+  schedule:
+    - cron: "17 6 * * *"   # once a day
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [scripts/pacman_graph.py, .github/workflows/pacman.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Draw the graph
+        run: python3 scripts/pacman_graph.py "${{ github.repository_owner }}" dist
+
+      - name: Publish to the output branch
+        run: |
+          cd dist
+          git init -q -b output
+          git add .
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "Redraw pac-man graph"
+          git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" output
