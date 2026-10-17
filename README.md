@@ -19,6 +19,10 @@ lately i've been getting models to run right in the browser: no server, no uploa
 - built **[tend](https://tend-daily-care.base44.app)**, a wellness app for unpaid caregivers
 - made **pac-man for trick-or-treating** at ellehacks (yes, you walk your actual street)
 
+### 🧰 tools i use
+
+<img src="https://skillicons.dev/icons?i=py,js,html,css,react,nodejs,vite,fastapi,flask,tensorflow,sklearn,opencv,git,vercel&perline=14" alt="python, javascript, html, css, react, node.js, vite, fastapi, flask, tensorflow, scikit-learn, opencv, git, vercel">
+
 ### 🛠️ things i've made
 
 <a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="32%"></picture></a>
