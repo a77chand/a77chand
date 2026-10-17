@@ -155,8 +155,8 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
     fr, fi = Face(400, t_roman, SERIF), Face(400, t_ital, SERIF_IT, "italic")
     f5 = Face(500, "".join(lines), MONO)
     css = fr.css("Instrument Serif") + fi.css("Instrument Serif") + f5.css("Geist Mono")
-    X0, BASE, SIZE, R = 26, 168, 24, 11
-    TS = 88
+    X0, BASE, SIZE, R = 26, 156, 20, 9
+    TS = 60
     title_w = fr.width("hi, i'm ", TS) + fi.width("anusha", TS) + fr.width(" :)", TS)
     PY = BASE - SIZE * 0.34
     TYPE, HOLD, SPEED = 0.065, 1.7, 420
@@ -243,7 +243,7 @@ def header(style="long", skin="medium", hair="black", outfit="sage"):
 </style>
 <defs><linearGradient id="tg" gradientUnits="userSpaceOnUse" x1="{X0}" y1="0" x2="{X0 + title_w:.0f}" y2="0">{stops}</linearGradient></defs>
 {doll}
-<text class="t" x="{X0 - 2}" y="104" font-size="{TS}" fill="url(#tg)">hi, i'm <tspan font-style="italic">anusha</tspan> :)</text>
+<text class="t" x="{X0 - 1}" y="112" font-size="{TS}" fill="url(#tg)">hi, i'm <tspan font-style="italic">anusha</tspan> :)</text>
 <g class="typing m" font-size="{SIZE}" font-weight="500" fill="{INK}">{"".join(chars)}{cursor}{pac}</g>
 <g class="m" font-size="{SIZE}" font-weight="500" fill="{INK}">{static_line}</g>
 {gang}
