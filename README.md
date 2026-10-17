@@ -1,7 +1,4 @@
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/header-dark.svg">
-  <img src="assets/header-light.svg" alt="hi, i'm anusha :)" width="100%">
-</picture>
+<img src="assets/header.svg" alt="hi, i'm anusha :)" width="100%">
 
 <p align="center">
   <a href="https://portfolio-anusha23.vercel.app"><img src="assets/badge-portfolio.svg" alt="my corner of the internet" height="30"></a>

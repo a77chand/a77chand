@@ -1,6 +1,7 @@
 """Build the README graphics: banner with the pixel doll, project cards, badges and footer.
 
-needs: pip install fonttools brotli, plus Fredoka's latin woff2 from Google Fonts.
+needs: pip install fonttools brotli, plus latin woff2 files from Google Fonts: Fredoka (pass its path),
+and InstrumentSerif-normal.woff2, InstrumentSerif-italic.woff2, GeistMono-normal.woff2 in the same folder.
 contrib.json is a list of [date, weekday_row, week_col, level] (only used for the local Pac-Man preview;
 the live graph comes from scripts/pacman_graph.py via the workflow).
 usage: python scripts/art/build_assets.py <fredoka.woff2> scripts/art/bc_week.json <contrib.json> <out_dir>
@@ -15,6 +16,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import sprite as SP
 
 FONT, BC_JSON, CONTRIB_JSON, OUT = sys.argv[1:5]
+# the banner uses Instrument Serif (title) and Geist Mono (typing line), kept next to the Fredoka file
+FONT_DIR = os.path.dirname(os.path.abspath(FONT))
+SERIF = os.path.join(FONT_DIR, "InstrumentSerif-normal.woff2")
+SERIF_IT = os.path.join(FONT_DIR, "InstrumentSerif-italic.woff2")
+MONO = os.path.join(FONT_DIR, "GeistMono-normal.woff2")
 os.makedirs(OUT, exist_ok=True)
 
 # palette: a warm sunset over a night sky
@@ -66,10 +72,14 @@ def esc(s):
 
 # ---------------------------------------------------------------- fonts
 class Face:
-    """One weight of Fredoka, subset to the text an SVG needs, plus glyph advances."""
+    """One weight/style of a font (Fredoka by default), subset to the text an SVG needs, plus glyph advances."""
 
-    def __init__(self, weight, text):
-        f = instancer.instantiateVariableFont(TTFont(FONT), {"wght": weight})
+    def __init__(self, weight, text, path=None, style="normal"):
+        f = TTFont(path or FONT)
+        if "fvar" in f:
+            axis = next(a for a in f["fvar"].axes if a.axisTag == "wght")
+            f = instancer.instantiateVariableFont(f, {"wght": min(max(weight, axis.minValue), axis.maxValue)})
+        self.style = style
         self.upm = f["head"].unitsPerEm
         cmap = f.getBestCmap()
         self.adv = {ch: f["hmtx"][cmap[ord(ch)]][0] for ch in set(text) if ord(ch) in cmap}
@@ -89,7 +99,8 @@ class Face:
         return sum(self.adv.get(ch, self.upm * 0.5) for ch in s) * size / self.upm
 
     def css(self, family):
-        return f"@font-face{{font-family:'{family}';font-weight:{self.weight};src:url(data:font/woff2;base64,{self.b64}) format('woff2')}}"
+        return (f"@font-face{{font-family:'{family}';font-weight:{self.weight};font-style:{self.style};"
+                f"src:url(data:font/woff2;base64,{self.b64}) format('woff2')}}")
 
 
 def fonts_css(spec):
@@ -128,19 +139,25 @@ def pacman(r, color=PAC):
 
 
 # ---------------------------------------------------------------- header
-def header(theme="dark", style="long", skin="medium", hair="black", outfit="sage"):
-    """Transparent banner: title, typing line pac-man eats, ghosts, and the pixel doll."""
+# mid-tone colours that read on both GitHub's white and its near-black background
+ROSE, VIOLET, INK = "#e0457b", "#7b5cf0", "#7a7391"
+
+
+def header(style="long", skin="medium", hair="black", outfit="sage"):
+    """Transparent banner for both themes: title, typing line pac-man eats, ghosts, and the pixel doll."""
     W, H = 960, 250
-    ink = CREAM if theme == "dark" else "#2b1d38"
-    grad = [AMBER, CORAL, PINK, LILAC] if theme == "dark" else ["#f08a00", CORAL, PINK, PURPLE]
     title = "hi, i'm anusha :)"
     lines = ["cs student @ uwaterloo",
              "i make ml models show their work",
              "deepfake detectors & wildfire maps",
              "and pac-man, but for trick-or-treating"]
-    css, faces = fonts_css({600: title, 500: "".join(lines)})
-    f5 = faces[500]
-    X0, BASE, SIZE, R = 24, 172, 30, 14
+    t_roman, t_ital = "hi, i'm  :)", "anusha"
+    fr, fi = Face(400, t_roman, SERIF), Face(400, t_ital, SERIF_IT, "italic")
+    f5 = Face(500, "".join(lines), MONO)
+    css = fr.css("Instrument Serif") + fi.css("Instrument Serif") + f5.css("Geist Mono")
+    X0, BASE, SIZE, R = 26, 168, 24, 11
+    TS = 88
+    title_w = fr.width("hi, i'm ", TS) + fi.width("anusha", TS) + fr.width(" :)", TS)
     PY = BASE - SIZE * 0.34
     TYPE, HOLD, SPEED = 0.065, 1.7, 420
 
@@ -183,7 +200,7 @@ def header(theme="dark", style="long", skin="medium", hair="black", outfit="sage
             acc = x + w
             cx_vals.append(f"{acc + 3:.1f}"); cx_keys.append(a)
         co_vals += ["1", "0"]; co_keys += [p["start"], p["hold_end"]]
-    cursor = (f'<g class="blink"><rect x="0" y="{BASE - SIZE * 0.78:.1f}" width="3" height="{SIZE * 0.95:.1f}" rx="1.5" fill="{AMBER}">'
+    cursor = (f'<g class="blink"><rect x="0" y="{BASE - SIZE * 0.8:.1f}" width="2.5" height="{SIZE * 1.0:.1f}" rx="1" fill="{VIOLET}">'
               f'<animate attributeName="x" values="{";".join(cx_vals)}" keyTimes="{";".join(kt(k) if i else "0" for i, k in enumerate(cx_keys))}" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/>'
               f'<animate attributeName="opacity" values="{";".join(co_vals)}" keyTimes="{";".join(kt(k) if i else "0" for i, k in enumerate(co_keys))}" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/>'
               f'</rect></g>')
@@ -195,7 +212,7 @@ def header(theme="dark", style="long", skin="medium", hair="black", outfit="sage
         tk += [kt(p["hold_end"]), kt(p["p_end"])]
         ov += ["1", "0"]; ok += [kt(p["hold_end"]), kt(p["p_end"])]
     tv.append(f"{plan[0]['p0']:.1f},{PY:.1f}"); tk.append("1")
-    pac = (f'<g opacity="0"><g>{pacman(R, PAC if theme == "dark" else "#f2b705")}</g>'
+    pac = (f'<g opacity="0"><g>{pacman(R, "#f5b700")}</g>'
            f'<animateTransform attributeName="transform" type="translate" values="{";".join(tv)}" keyTimes="{";".join(tk)}" dur="{T}s" repeatCount="indefinite"/>'
            f'<animate attributeName="opacity" values="{";".join(ov)}" keyTimes="{";".join(ok)}" calcMode="discrete" dur="{T}s" repeatCount="indefinite"/></g>')
 
@@ -209,11 +226,12 @@ def header(theme="dark", style="long", skin="medium", hair="black", outfit="sage
     doll_css = SP.palette_css(SP.palette(skin, hair, outfit))
 
     static_line = f'<text class="static" x="{X0}" y="{BASE}" style="display:none">{esc(lines[0])}</text>'
-    stops = "".join(f'<stop offset="{o}" stop-color="{c}"/>' for o, c in zip(("0", ".35", ".65", "1"), grad))
+    stops = f'<stop offset="0" stop-color="{ROSE}"/><stop offset="1" stop-color="{VIOLET}"/>'
     return W, H, f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="hi, i'm anusha :)">
 <style>
 {css}
-text{{{FAM}}}
+.t{{font-family:'Instrument Serif',Georgia,'Times New Roman',serif}}
+.m{{font-family:'Geist Mono',ui-monospace,SFMono-Regular,Menlo,monospace}}
 .blink{{animation:bl 1s steps(1) infinite}}@keyframes bl{{50%{{opacity:0}}}}
 .bob{{animation:bob 2.4s ease-in-out infinite}}@keyframes bob{{0%,100%{{transform:translateY(0)}}50%{{transform:translateY(-7px)}}}}
 .b1{{animation-delay:-.6s}}.b2{{animation-delay:-1.2s}}
@@ -223,11 +241,11 @@ text{{{FAM}}}
 /*doll*/{doll_css}/*/doll*/
 @media (prefers-reduced-motion:reduce){{.typing{{display:none}}.static{{display:inline!important}}.bob,.pp,.hop,.blink,.blk{{animation:none}}}}
 </style>
-<defs><linearGradient id="tg" x1="0" x2="1">{stops}</linearGradient></defs>
+<defs><linearGradient id="tg" gradientUnits="userSpaceOnUse" x1="{X0}" y1="0" x2="{X0 + title_w:.0f}" y2="0">{stops}</linearGradient></defs>
 {doll}
-<text x="{X0 - 3}" y="104" font-size="66" font-weight="600" fill="url(#tg)">{esc(title)}</text>
-<g class="typing" font-size="{SIZE}" font-weight="500" fill="{ink}">{"".join(chars)}{cursor}{pac}</g>
-<g font-size="{SIZE}" font-weight="500" fill="{ink}">{static_line}</g>
+<text class="t" x="{X0 - 2}" y="104" font-size="{TS}" fill="url(#tg)">hi, i'm <tspan font-style="italic">anusha</tspan> :)</text>
+<g class="typing m" font-size="{SIZE}" font-weight="500" fill="{INK}">{"".join(chars)}{cursor}{pac}</g>
+<g class="m" font-size="{SIZE}" font-weight="500" fill="{INK}">{static_line}</g>
 {gang}
 </svg>'''
 
@@ -484,9 +502,8 @@ ICONS = {
 }
 
 sizes = {}
-for th in ("light", "dark"):
-    W, H, svg = header(th)
-    sizes[f"header-{th}.svg"] = write(f"header-{th}.svg", svg)
+W, H, svg = header()
+sizes["header.svg"] = write("header.svg", svg)
 sizes["footer.svg"] = write("footer.svg", footer())
 for name, label, color in [("portfolio", "my corner of the internet", CORAL), ("linkedin", "linkedin", PINK), ("email", "email", PURPLE)]:
     sizes[f"badge-{name}.svg"] = write(f"badge-{name}.svg", badge(label, color, ICONS[name]))
