@@ -13,6 +13,7 @@ lately i've been getting models to run right in the browser: no server, no uploa
 ### 📟 a little about me
 
 - **cs** @ [university of waterloo](https://uwaterloo.ca/), mostly self-taught and very project-driven
+- building **[huddle](https://github.com/a77chand/huddle)**, an end-to-end encrypted safety app for nights out, with a fine-tuned 0.5b model that turns voice notes into alerts right on your phone
 - co-created **[ethicura ai](https://github.com/a77chand/ethicura-ai)** at nyas, a deepfake detector that runs in your browser and shows you which part of the face gave it away
 - built a **[wildfire risk model](https://github.com/a77chand/wildfire-risk-prediction)** for all of b.c., then tested it on fire seasons it had never seen
 - research contributor on **[ai bias](https://github.com/a77chand/portfolio/blob/main/src/assets/SIGCSE_Poster_Learning_Outcomes_LLM.pdf)** at sigcse 2025
@@ -24,11 +25,13 @@ lately i've been getting models to run right in the browser: no server, no uploa
 <p>
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML">
   <img src="https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=css&logoColor=white" alt="CSS">
   <img src="https://img.shields.io/badge/Racket-9F1D20?style=flat-square&logo=racket&logoColor=white" alt="Racket">
   <br>
   <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React">
+  <img src="https://img.shields.io/badge/Expo-000020?style=flat-square&logo=expo&logoColor=white" alt="Expo">
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js">
   <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite">
   <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
@@ -50,9 +53,10 @@ lately i've been getting models to run right in the browser: no server, no uploa
 
 ### 🛠️ things i've made
 
-<a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="32%"></picture></a>
-<a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk across b.c." src="assets/card-wildfire-light.svg" width="32%"></picture></a>
-<a href="https://github.com/a77chand/Pack_Ween1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-packween-dark.svg"><img alt="pack_ween: pac-man for trick-or-treating" src="assets/card-packween-light.svg" width="32%"></picture></a>
+<a href="https://github.com/a77chand/huddle"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-huddle-dark.svg"><img alt="huddle: who's okay on a night out" src="assets/card-huddle-light.svg" width="48%"></picture></a>
+<a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="48%"></picture></a>
+<a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk across b.c." src="assets/card-wildfire-light.svg" width="48%"></picture></a>
+<a href="https://github.com/a77chand/Pack_Ween1"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-packween-dark.svg"><img alt="pack_ween: pac-man for trick-or-treating" src="assets/card-packween-light.svg" width="48%"></picture></a>
 
 <p align="center"><sub>try them out: <a href="https://ethicura-frontend.vercel.app">deepfake demo</a> · <a href="https://pack-ween.onrender.com">play pack_ween</a></sub></p>
 

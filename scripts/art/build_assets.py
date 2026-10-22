@@ -408,6 +408,40 @@ def art_pac(theme):
     return art, ""
 
 
+def art_huddle(theme):
+    """Friends huddled together (Bluetooth chatter between them), one who wandered off with a check-in ping."""
+    t = THEME[theme]
+    grid = "".join(f'<circle cx="{x}" cy="{y}" r="1.1" fill="{t["dot"]}"/>'
+                   for x in range(PX + 10, PX + PW, 12) for y in range(PY_ + 9, PY_ + PH, 12))
+    friends = [(92, 76, CORAL), (134, 58, TEAL), (124, 112, AMBER)]
+    away = (214, 96, PURPLE)
+    links = "".join(f'<line class="bt" x1="{a[0]}" y1="{a[1]}" x2="{b[0]}" y2="{b[1]}" stroke="{t["muted"]}" stroke-width="1.6" '
+                    f'stroke-dasharray="2 5" stroke-linecap="round" stroke-opacity=".7"/>'
+                    for a, b in [(friends[0], friends[1]), (friends[1], friends[2]), (friends[2], friends[0])])
+    trail = (f'<path d="M136,108 C160,128 184,118 200,104" fill="none" stroke="{t["muted"]}" stroke-width="1.4" '
+             f'stroke-dasharray="1 6" stroke-linecap="round" stroke-opacity=".55"/>')
+    face_col = "#2b1d38"
+
+    def friend(x, y, col):
+        return (f'<circle cx="{x}" cy="{y}" r="13" fill="{col}"/>'
+                f'<circle cx="{x - 4}" cy="{y - 2}" r="1.7" fill="{face_col}"/><circle cx="{x + 4}" cy="{y - 2}" r="1.7" fill="{face_col}"/>'
+                f'<path d="M{x - 3.5},{y + 3.5} Q{x},{y + 6.5} {x + 3.5},{y + 3.5}" fill="none" stroke="{face_col}" stroke-width="1.5" stroke-linecap="round"/>')
+    ax, ay, acol = away
+    ring = "".join(f'<circle class="ping" cx="{ax}" cy="{ay}" r="13" fill="none" stroke="{PINK}" stroke-width="1.6" style="animation-delay:{d}s"/>'
+                   for d in (0, 1.1))
+    pill = (f'<rect x="{ax - 41}" y="{ay - 44}" width="82" height="19" rx="9.5" fill="{PINK}"/>'
+            f'<text x="{ax}" y="{ay - 30.5}" font-size="12" font-weight="600" text-anchor="middle" fill="#fff">still okay?</text>')
+    lx, ly = PX + PW - 22, PY_ + PH - 26
+    lock = (f'<g transform="translate({lx},{ly})" fill="none" stroke="{t["muted"]}" stroke-width="1.6" stroke-linecap="round">'
+            f'<rect x="-6" y="0" width="12" height="9.5" rx="2.2"/><path d="M-3.6,0V-3.2a3.6,3.6 0 0 1 7.2,0V0"/></g>')
+    art = (f'<g>{grid}</g>{links}{trail}{"".join(friend(*f) for f in friends)}{ring}{friend(ax, ay, acol)}{pill}{lock}')
+    css = (".ping{animation:ping 2.2s ease-out infinite;transform-box:fill-box;transform-origin:center}"
+           "@keyframes ping{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.3);opacity:0}}"
+           ".bt{animation:bt 1.6s linear infinite}@keyframes bt{to{stroke-dashoffset:-14}}"
+           "@media (prefers-reduced-motion:reduce){.ping,.bt{animation:none}}")
+    return art, css
+
+
 # ---------------------------------------------------------------- pac-man contribution graph
 def contrib(theme):
     t = THEME[theme]
@@ -542,6 +576,8 @@ for th in THEME:
     sizes[f"card-wildfire-{th}.svg"] = write(f"card-wildfire-{th}.svg", card(th, "wildfire-risk", ["weekly fire risk across b.c."], [], a, c))
     a, c = art_pac(th)
     sizes[f"card-packween-{th}.svg"] = write(f"card-packween-{th}.svg", card(th, "pack_ween", ["pac-man for trick-or-treating"], [], a, c, "25 m"))
+    a, c = art_huddle(th)
+    sizes[f"card-huddle-{th}.svg"] = write(f"card-huddle-{th}.svg", card(th, "huddle", ["who's okay on a night out"], [], a, c, "still okay?"))
     sizes[f"pacman-contrib-{th}.svg"] = write(f"pacman-contrib-{th}.svg", contrib(th))
 for k, v in sizes.items():
     print(f"{k:28s} {v / 1024:6.1f} KB")
