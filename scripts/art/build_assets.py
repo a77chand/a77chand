@@ -442,6 +442,54 @@ def art_huddle(theme):
     return art, css
 
 
+def art_apogeic(theme):
+    """A CubeSat gliding along a dashed orbit over the Earth, under a row of mission stars."""
+    sky_top, sky_bot = ("#170f26", "#35194f") if theme == "light" else ("#0d0817", "#241238")
+    rnd = random.Random(11)
+    ex, ey, er, orb = PX + PW / 2, PY_ + PH + 88, 124, 152
+    stars = []
+    for i in range(36):
+        x, y = rnd.uniform(PX + 8, PX + PW - 8), rnd.uniform(PY_ + 8, PY_ + PH - 46)
+        tw = f' class="tw" style="animation-delay:{rnd.uniform(0, 3):.1f}s"' if i % 4 == 0 else ""
+        stars.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{rnd.choice([0.7, 0.9, 1.1, 1.4])}" fill="{CREAM}" '
+                     f'fill-opacity="{rnd.choice([0.5, 0.7, 0.9])}"{tw}/>')
+
+    def star(cx, cy, ro=5.6, ri=2.4):
+        pts = [(cx + (ro if k % 2 == 0 else ri) * math.sin(math.pi * k / 5),
+                cy - (ro if k % 2 == 0 else ri) * math.cos(math.pi * k / 5)) for k in range(10)]
+        return f'<polygon points="{" ".join(f"{x:.1f},{y:.1f}" for x, y in pts)}" fill="{PAC}"/>'
+    rating = "".join(star(PX + PW - 54 + i * 16, PY_ + 22) for i in range(3))
+    land = (f'<ellipse cx="{ex - 34}" cy="{ey - er + 20}" rx="30" ry="9" transform="rotate(-8 {ex - 34} {ey - er + 20})" fill="#4caf6a"/>'
+            f'<ellipse cx="{ex + 40}" cy="{ey - er + 16}" rx="20" ry="7" transform="rotate(10 {ex + 40} {ey - er + 16})" fill="#4caf6a"/>'
+            f'<ellipse cx="{ex + 4}" cy="{ey - er + 34}" rx="16" ry="6" fill="#4caf6a" fill-opacity=".85"/>'
+            f'<ellipse cx="{ex - 8}" cy="{ey - er + 12}" rx="22" ry="2.4" fill="#fff" fill-opacity=".35"/>'
+            f'<ellipse cx="{ex + 58}" cy="{ey - er + 30}" rx="14" ry="2.2" fill="#fff" fill-opacity=".3"/>')
+    sy = ey - orb
+    sat = (f'<g class="sat"><g transform="translate({ex:.1f},{sy:.1f})">'
+           f'<path d="M0,-4V-8.5" stroke="#07111f" stroke-width="1.2"/><circle class="pg" cy="-9.5" r="1.5" fill="none" stroke="{TEAL}" stroke-width="1"/>'
+           f'<circle cy="-9.5" r="1.5" fill="{TEAL}"/>'
+           f'<rect x="-20" y="-3.2" width="12" height="6.4" rx="1" fill="#2b5da8" stroke="#07111f" stroke-width=".9"/>'
+           f'<rect x="8" y="-3.2" width="12" height="6.4" rx="1" fill="#2b5da8" stroke="#07111f" stroke-width=".9"/>'
+           f'<path d="M-14,-3.2V3.2M14,-3.2V3.2" stroke="#4f86d6" stroke-width=".7"/>'
+           f'<rect x="-6.5" y="-4.5" width="13" height="9" rx="1.6" fill="#d9a441" stroke="#07111f" stroke-width="1"/>'
+           f'<rect x="-6.5" y="-4.5" width="13" height="3" rx="1.2" fill="#f0c866" fill-opacity=".7"/></g></g>')
+    art = (f'<defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="{sky_top}"/>'
+           f'<stop offset="1" stop-color="{sky_bot}"/></linearGradient><clipPath id="ec"><circle cx="{ex}" cy="{ey}" r="{er}"/></clipPath></defs>'
+           f'<rect x="{PX}" y="{PY_}" width="{PW}" height="{PH}" fill="url(#sky)"/>{"".join(stars)}{rating}'
+           f'<circle cx="{ex}" cy="{ey}" r="{er + 9}" fill="{TEAL}" fill-opacity=".12"/>'
+           f'<circle cx="{ex}" cy="{ey}" r="{er + 3}" fill="none" stroke="{TEAL}" stroke-opacity=".6" stroke-width="2"/>'
+           f'<circle cx="{ex}" cy="{ey}" r="{er}" fill="#2b6cd6"/><g clip-path="url(#ec)">{land}</g>'
+           f'<circle cx="{ex}" cy="{ey}" r="{orb}" fill="none" stroke="{LILAC}" stroke-width="1.3" stroke-dasharray="3 6" '
+           f'stroke-linecap="round" stroke-opacity=".75"/>{sat}')
+    css = (f".sat{{transform-box:view-box;transform-origin:{ex}px {ey}px;animation:orb 10s ease-in-out infinite alternate}}"
+           "@keyframes orb{from{transform:rotate(-44deg)}to{transform:rotate(44deg)}}"
+           ".tw{animation:tw 2.6s ease-in-out infinite}@keyframes tw{50%{opacity:.25}}"
+           ".pg{animation:pg 1.8s ease-out infinite;transform-box:fill-box;transform-origin:center}"
+           "@keyframes pg{0%{transform:scale(1);opacity:.9}100%{transform:scale(4.2);opacity:0}}"
+           "@media (prefers-reduced-motion:reduce){.sat,.tw,.pg{animation:none}}")
+    return art, css
+
+
 # ---------------------------------------------------------------- pac-man contribution graph
 def contrib(theme):
     t = THEME[theme]
@@ -578,6 +626,8 @@ for th in THEME:
     sizes[f"card-packween-{th}.svg"] = write(f"card-packween-{th}.svg", card(th, "pack_ween", ["pac-man for trick-or-treating"], [], a, c, "25 m"))
     a, c = art_huddle(th)
     sizes[f"card-huddle-{th}.svg"] = write(f"card-huddle-{th}.svg", card(th, "huddle", ["who's okay on a night out"], [], a, c, "still okay?"))
+    a, c = art_apogeic(th)
+    sizes[f"card-apogeic-{th}.svg"] = write(f"card-apogeic-{th}.svg", card(th, "ap0geic 11", ["design it, launch it, learn"], [], a, c))
     sizes[f"pacman-contrib-{th}.svg"] = write(f"pacman-contrib-{th}.svg", contrib(th))
 for k, v in sizes.items():
     print(f"{k:28s} {v / 1024:6.1f} KB")

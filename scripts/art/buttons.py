@@ -116,4 +116,16 @@ svg("ellehacks", "hacked at ellehacks",
     + text("HACKED AT", 17, 13, "#fff1e6") + text("ELLEHACKS", 17, 23, "#ffffff", 700, shadow="#8a1534"),
     ".beat{animation:beat 1s steps(1) infinite}@keyframes beat{50%{opacity:.35}}")
 
+# 7. built for space apps
+earth = "".join(f'<rect x="{5 + c}" y="{11 + r}" width="1" height="1" fill="{"#4caf6a" if px == "G" else "#2b6cd6"}"/>'
+                for r, row in enumerate(["..OOOO..", ".OGGOOO.", "OOGGOGOO", "OOOOGGOO", "OGOOOGGO", "OGGOOOOO", ".OOOOOO.", "..OOOO.."])
+                for c, px in enumerate(row) if px != ".")
+sparks = "".join(f'<rect class="s s{i % 3}" x="{x}" y="{y}" width="1" height="1" fill="#fff1e6"/>'
+                 for i, (x, y) in enumerate([(4, 5), (15, 4), (3, 24), (16, 26), (84, 5), (84, 26)]))
+fits(("BUILT FOR", S4, 19), ("SPACE APPS", S7, 19))
+svg("spaceapps", "built for nasa space apps 2026",
+    bevel("#0b1d3a", "#4f86d6", "#07111f") + sparks + earth
+    + text("BUILT FOR", 19, 13, "#c9d6ee") + text("SPACE APPS", 19, 23, "#ffd23f", 700),
+    ".s{animation:tw 2.4s steps(1) infinite}.s1{animation-delay:-.8s}.s2{animation-delay:-1.6s}@keyframes tw{50%{opacity:.1}}")
+
 print(sorted(os.listdir(OUT)))
