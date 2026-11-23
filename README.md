@@ -57,7 +57,7 @@ lately i've been getting models to run right in the browser: no server, no uploa
 <a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="32%"></picture></a>
 <a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk across b.c." src="assets/card-wildfire-light.svg" width="32%"></picture></a>
 
-<p align="center"><sub>try them out: <a href="https://ethicura-frontend.vercel.app">deepfake demo</a> · <a href="https://pack-ween.onrender.com">play pack_ween</a></sub></p>
+<p align="center"><sub>try them out: <a href="https://ethicura-frontend.vercel.app">deepfake demo</a> · <a href="https://pack-ween.onrender.com">play pack_ween</a> · <a href="https://a77chand.github.io/apogeic-game/">play ap0geic 11</a></sub></p>
 
 ### 👾 a little github activity
 
