@@ -8,20 +8,18 @@
 
 i'm a cs student at waterloo building things where software, machine learning and ethics meet. i like ml you can actually poke at, so most of my projects end with a heatmap somewhere.
 
-lately i've been getting models to run right in the browser: no server, no uploads, just your gpu doing its thing. and when i'm not training models, i'm making games: most recently a space mission design game for nasa space apps 2026.
+lately i've been getting models to run right in the browser: no server, no uploads, just your gpu doing its thing.
 
 ### 📟 a little about me
 
-- **cs** @ [university of waterloo](https://uwaterloo.ca/) on the president's scholarship of distinction, mostly self-taught and very project-driven
-- software engineering intern at **cholayil** in chennai, where two power bi dashboards gave the sales team live numbers and saved them 4 man-days every reporting cycle
-- built **[ap0geic 11](https://github.com/a77chand/apogeic)** with team nebula forge for nasa space apps 2026: a game where you design a satellite, launch it and find out exactly why the mission worked or didn't. 20 real missions, written in godot, and it plays in your browser
+- **cs** @ [university of waterloo](https://uwaterloo.ca/), mostly self-taught and very project-driven
+- built **[ap0geic 11](https://github.com/a77chand/apogeic)** with team nebula forge for nasa space apps 2026: a game where you design a satellite, launch it and find out why the mission worked or didn't
 - building **[huddle](https://github.com/a77chand/huddle)**, an end-to-end encrypted safety app for nights out, with a fine-tuned 0.5b model that turns voice notes into alerts right on your phone
-- co-created **[ethicura ai](https://github.com/a77chand/ethicura-ai)** at nyas, then rebuilt it from scratch: a deepfake detector with its own model (auc 0.986 on people it had never seen) that runs in your browser and shows you which part of the face gave it away
+- co-created **[ethicura ai](https://github.com/a77chand/ethicura-ai)** at nyas, a deepfake detector that runs in your browser and shows you which part of the face gave it away
 - built a **[wildfire risk model](https://github.com/a77chand/wildfire-risk-prediction)** for all of b.c., then tested it on fire seasons it had never seen
 - research contributor on **[ai bias](https://github.com/a77chand/portfolio/blob/main/src/assets/SIGCSE_Poster_Learning_Outcomes_LLM.pdf)** at sigcse 2025
 - built **[tend](https://tend-daily-care.base44.app)**, a wellness app for unpaid caregivers
 - made **pac-man for trick-or-treating** at ellehacks (yes, you walk your actual street)
-- volunteer facilitator with **tribesforgood**, leading stem and ai-ethics sessions
 
 ### 🧰 languages & tools
 
@@ -29,9 +27,6 @@ lately i've been getting models to run right in the browser: no server, no uploa
   <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black" alt="JavaScript">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Java-ED8B00?style=flat-square&logo=openjdk&logoColor=white" alt="Java">
-  <img src="https://img.shields.io/badge/Swift-F05138?style=flat-square&logo=swift&logoColor=white" alt="Swift">
-  <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin">
   <img src="https://img.shields.io/badge/GDScript-478CBF?style=flat-square&logo=godotengine&logoColor=white" alt="GDScript">
   <img src="https://img.shields.io/badge/HTML-E34F26?style=flat-square&logo=html5&logoColor=white" alt="HTML">
   <img src="https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=css3&logoColor=white" alt="CSS">
@@ -40,8 +35,6 @@ lately i've been getting models to run right in the browser: no server, no uploa
   <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React">
   <img src="https://img.shields.io/badge/Expo-000020?style=flat-square&logo=expo&logoColor=white" alt="Expo">
   <img src="https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white" alt="Node.js">
-  <img src="https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white" alt="Express">
-  <img src="https://img.shields.io/badge/Fastify-000000?style=flat-square&logo=fastify&logoColor=white" alt="Fastify">
   <img src="https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white" alt="Vite">
   <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white" alt="Flask">
@@ -50,7 +43,6 @@ lately i've been getting models to run right in the browser: no server, no uploa
   <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white" alt="TensorFlow">
   <img src="https://img.shields.io/badge/Keras-D00000?style=flat-square&logo=keras&logoColor=white" alt="Keras">
   <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikitlearn&logoColor=white" alt="scikit-learn">
-  <img src="https://img.shields.io/badge/Hugging%20Face-FFD21E?style=flat-square&logo=huggingface&logoColor=black" alt="Hugging Face">
   <img src="https://img.shields.io/badge/ONNX-005CED?style=flat-square&logo=onnx&logoColor=white" alt="ONNX">
   <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=flat-square&logo=opencv&logoColor=white" alt="OpenCV">
   <img src="https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white" alt="pandas">
@@ -59,25 +51,15 @@ lately i've been getting models to run right in the browser: no server, no uploa
   <img src="https://img.shields.io/badge/Godot-478CBF?style=flat-square&logo=godotengine&logoColor=white" alt="Godot">
   <img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" alt="Git">
   <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub">
-  <img src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white" alt="GitHub Actions">
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker">
-  <img src="https://img.shields.io/badge/pytest-0A9EDC?style=flat-square&logo=pytest&logoColor=white" alt="pytest">
-  <img src="https://img.shields.io/badge/SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white" alt="SQLite">
   <img src="https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white" alt="Jupyter">
-  <br>
   <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel">
-  <img src="https://img.shields.io/badge/Render-46E3B7?style=flat-square&logo=render&logoColor=black" alt="Render">
-  <img src="https://img.shields.io/badge/Power%20BI-F2C811?style=flat-square" alt="Power BI">
-  <img src="https://img.shields.io/badge/SAP-0FAAFF?style=flat-square&logo=sap&logoColor=white" alt="SAP">
-  <img src="https://img.shields.io/badge/Claude%20Code-D97757?style=flat-square&logo=claude&logoColor=white" alt="Claude Code">
 </p>
 
 ### 🛠️ things i've made
 
-<a href="https://github.com/a77chand/apogeic"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-apogeic-dark.svg"><img alt="ap0geic 11: design a space mission, learn why it worked" src="assets/card-apogeic-light.svg" width="49%"></picture></a>
-<a href="https://github.com/a77chand/huddle"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-huddle-dark.svg"><img alt="huddle: who's okay on a night out" src="assets/card-huddle-light.svg" width="49%"></picture></a>
-<a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="49%"></picture></a>
-<a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk across b.c." src="assets/card-wildfire-light.svg" width="49%"></picture></a>
+<a href="https://github.com/a77chand/huddle"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-huddle-dark.svg"><img alt="huddle: who's okay on a night out" src="assets/card-huddle-light.svg" width="32%"></picture></a>
+<a href="https://github.com/a77chand/ethicura-ai"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-ethicura-dark.svg"><img alt="ethicura-ai: spots deepfakes, shows why" src="assets/card-ethicura-light.svg" width="32%"></picture></a>
+<a href="https://github.com/a77chand/wildfire-risk-prediction"><picture><source media="(prefers-color-scheme: dark)" srcset="assets/card-wildfire-dark.svg"><img alt="wildfire-risk: weekly fire risk across b.c." src="assets/card-wildfire-light.svg" width="32%"></picture></a>
 
 <p align="center"><sub>try them out: <a href="https://ethicura-frontend.vercel.app">deepfake demo</a> · <a href="https://pack-ween.onrender.com">play pack_ween</a> · <a href="https://a77chand.github.io/apogeic-game/">play ap0geic 11</a></sub></p>
 
@@ -101,7 +83,6 @@ if you're building something with ml, maps or games, or you just want to swap ha
   <img src="assets/btn-uwaterloo.svg" alt="uwaterloo cs student">
   <img src="assets/btn-night.svg" alt="best viewed at night">
   <img src="assets/btn-ellehacks.svg" alt="hacked at ellehacks">
-  <img src="assets/btn-spaceapps.svg" alt="built for nasa space apps 2026">
 </p>
 
 <img src="assets/footer.svg" alt="four little ghosts swimming in a sunset wave" width="100%">
